@@ -1,9 +1,9 @@
-# X-Ray Alerts
+# [X-Ray Alerts](https://www.spigotmc.org/resources/x-ray-alerts-anti-xray-new-gui.101172/)
 This is a simple script to stop X-Raying on minecraft servers
 
 ## How to install
 1. Drag the [Skript](https://github.com/SkriptLang/Skript/releases) plugin into the plugins folder (You can skip this if skript is already installed)
-2. Drag the [Skript-GUI](https://raw.githubusercontent.com/Animationking11/X-RayAlerts/main/skript-gui.jar) plugin into the plugins folder (You can skip this if skript-GUI is already installed)
+2. Drag the [Skript-GUI](https://github.com/OddDevelopment/Xray-Alerts-Skript/raw/main/skript-gui.jar) plugin into the plugins folder (You can skip this if skript-GUI is already installed)
 2. Restart your server (You can skip this if skript is already installed)
 3. Open the skript folder located in the plugins folder
 4. Go to the scripts directory
@@ -12,5 +12,8 @@ This is a simple script to stop X-Raying on minecraft servers
 
 ## Features
 ~ Easy to use
+
 ~ Clean GUI
+
 ~ Wont spam alerts
+
