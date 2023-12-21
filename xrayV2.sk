@@ -1,0 +1,66 @@
+on break:
+	if event-block is diamond ore or deepslate diamond ore:
+		add 1 to {Diamond-Mined::%player's uuid%}
+		if {Diamond-Mined::%player's uuid%} is above 20:
+			if {AlertSent::%player's uuid%} is true:
+				stop
+			set {AlertSent::%player's uuid%} to true
+			loop all players:
+				if loop-player has permission "XRay.Alerts":
+					send "&e&lXRAY &7| &f%player% has mined %{Diamond-Mined::%player's uuid%}% diamonds in the last five minutes!!!" to loop-player
+	if event-block is gold ore or deepslate gold ore or iron ore or deepslate iron ore:
+		add 1 to {Gold-Mined::%player's uuid%}
+		if {Gold-Mined::%player's uuid%} is above 50:
+			if {AlertSent::%player's uuid%} is true:
+				stop
+			set {AlertSent::%player's uuid%} to true
+			loop all players:
+				if loop-player has permission "XRay.Alerts":
+					send "&c[&e⚠&c] &f%player% &7has mined &e%{Gold-Mined::%player's uuid%}% gold and iron &7in the last five minutes!!! Do &e/xrayinfo %player% &7for more info." to loop-player
+	if event-block is emerald ore or deepslate emerald ore:
+		add 1 to {Emerald-Mined::%player's uuid%}
+		if {Emerald-Mined::%player's uuid%} is above 16:
+			if {AlertSent::%player's uuid%} is true:
+				stop
+			set {AlertSent::%player's uuid%} to true
+			loop all players:
+				if loop-player has permission "XRay.Alerts":
+					send "&c[&e⚠&c] &f%player% &7has mined &a%{Emerald-Mined::%player's uuid%}% emerald &7in the last five minutes!!! Do &e/xrayinfo %player% &7for more info." to loop-player
+	if event-block is ancient debris:
+		add 1 to {Debris-Mined::%player's uuid%}
+		if {Debris-Mined::%player's uuid%} is above 10:
+			if {AlertSent::%player's uuid%} is true:
+				stop
+			set {AlertSent::%player's uuid%} to true
+			loop all players:
+				if loop-player has permission "XRay.Alerts":
+					send "&c[&e⚠&c] &f%player% &7has mined &8%{Debris-Mined::%player's uuid%}% Ancient debris &7in the last five minutes!!! Do &e/xrayinfo %player% &7for more info." to loop-player
+every 2 minutes:
+	delete {AlertSent::*}
+
+every 5 minutes:
+	resetMined()
+	
+function resetMined():
+	delete {Diamond-Mined::*}
+	delete {Gold-Mined::*}
+	delete {Emerald-Mined::*}
+	delete {Debris-Mined::*}
+
+	
+command /xrayinfo <player>:
+	permission: XRay.info
+	trigger:
+		set {_plr} to arg-1
+		create a gui with virtual hopper inventory with 1 rows named "Xray information for %player%":
+			format gui slot 0 with ancient debris named "&8&nAncient Debris Mined" with lore "&7 " and "&7%player% has mined" and "&8%{Debris-Mined::%{_plr}'s uuid%}% Ancient Debris &7in" and "&7the last &7five minutes!" and "&7 "
+			format gui slot 1 with emerald ore named "&a&nEmeralds Mined" with lore "&7 " and "&7%player% has mined" and "&a%{Emerald-Mined::%{_plr}'s uuid%}% Emeralds &7in" and "&7the last &7five minutes!" and "&7 "
+			format gui slot 2 with diamond ore named "&b&nDiamonds Mined" with lore "&7 " and "&7%player% has mined" and "&b%{Diamond-Mined::%{_plr}'s uuid%}% Diamonds &7in" and "&7the last &7five minutes!" and "&7 "
+			format gui slot 3 with gray dye named "&e&nGold and Iron Mined" with lore "&7 " and "&7%player% has mined" and "&e%{Gold-Mined::%{_plr}'s uuid%}% Gold and Iron &7in" and "&7the last &7five minutes!" and "&7 "
+			format gui slot 4 with ender eye named "&e&nVanish Teleport to Player" with lore "&7 " and "&7This will teleport you to the" and "&7player, and put you in spectator mode" and "&7 ":
+				PLAY SOUND "entity.enderman.teleport" for player
+				set player's gamemode to spectator
+				teleport player to {_plr}
+				set player's gamemode to spectator
+				close player's inventory
+		open last gui to player
